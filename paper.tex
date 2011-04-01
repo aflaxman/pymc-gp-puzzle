@@ -1,0 +1,590 @@
+%% BioMed_Central_Tex_Template_v1.05
+%%                                      %
+%  bmc_article.tex            ver: 1.05 %
+%                                       %
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                     %%
+%%  LaTeX template for BioMed Central  %%
+%%     journal article submissions     %%
+%%                                     %%
+%%         <27 January 2006>           %%
+%%                                     %%
+%%                                     %%
+%% Uses:                               %%
+%% cite.sty, url.sty, bmc_article.cls  %%
+%% ifthen.sty. multicol.sty		       %%
+%%									   %%
+%%                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%	
+%% For instructions on how to fill out this Tex template           %%
+%% document please refer to Readme.pdf and the instructions for    %%
+%% authors page on the biomed central website                      %%
+%% http://www.biomedcentral.com/info/authors/                      %%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%% BioMed Central currently use the MikTex distribution of         %%
+%% TeX for Windows) of TeX and LaTeX.  This is available from      %%
+%% http://www.miktex.org                                           %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\documentclass[10pt]{bmc_article}    
+
+
+
+% Load packages
+\usepackage{cite} % Make references as [1-4], not [1,2,3,4]
+\usepackage{url}  % Formatting web addresses  
+\usepackage{ifthen}  % Conditional 
+\usepackage{multicol}   %Columns
+\usepackage[utf8]{inputenc} %unicode support
+%\usepackage[applemac]{inputenc} %applemac support if unicode package fails
+%\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
+\urlstyle{rm}
+ 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+%%                                             %%
+%%  If you wish to display your graphics for   %%
+%%  your own use using includegraphic or       %%
+%%  includegraphics, then comment out the      %%
+%%  following two lines of code.               %%   
+%%  NB: These line *must* be included when     %%
+%%  submitting to BMC.                         %% 
+%%  All figure files must be submitted as      %%
+%%  separate graphics through the BMC          %%
+%%  submission process, not included in the    %% 
+%%  submitted article.                         %% 
+%%                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                     
+
+
+%\def\includegraphic{}
+%\def\includegraphics{}
+
+
+
+\setlength{\topmargin}{0.0cm}
+\setlength{\textheight}{21.5cm}
+\setlength{\oddsidemargin}{0cm} 
+\setlength{\textwidth}{16.5cm}
+\setlength{\columnsep}{0.6cm}
+
+\newboolean{publ}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                              %%
+%% You may change the following style settings  %%
+%% Should you wish to format your article       %%
+%% in a publication style for printing out and  %%
+%% sharing with colleagues, but ensure that     %%
+%% before submitting to BMC that the style is   %%
+%% returned to the Review style setting.        %%
+%%                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+
+%Review style settings
+\newenvironment{bmcformat}{\begin{raggedright}\baselineskip20pt\sloppy\setboolean{publ}{false}}{\end{raggedright}\baselineskip20pt\sloppy}
+
+%Publication style settings
+%\newenvironment{bmcformat}{\fussy\setboolean{publ}{true}}{\fussy}
+
+
+
+% Begin ...
+\begin{document}
+\begin{bmcformat}
+
+
+
+% This should list the title of the article. The title should include
+% the study design, for example:
+% 
+% A versus B in the treatment of C: a randomized controlled trial
+% 
+% X is a risk factor for Y: a case control study
+%
+% The full names, institutional addresses, and e-mail addresses for
+% all authors must be included on the title page. The corresponding
+% author should also be indicated.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{A sample article title}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors here                   %%
+%%                                          %%
+%% Ensure \and is entered between all but   %%
+%% the last two authors. This will be       %%
+%% replaced by a comma in the final article %%
+%%                                          %%
+%% Ensure there are no trailing spaces at   %% 
+%% the ends of the lines                    %%     	
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\author{Charles A Darwin\correspondingauthor$^{1,2}$%
+       \email{Charles A Darwin\correspondingauthor - charles@londonzoo.co.uk}%
+      \and
+         Jane E Doe\correspondingauthor$^2$%
+         \email{Jane E Doe\correspondingauthor - jane.e.doe@cambridge.co.uk}
+       and 
+         John RS Smith$^3$%
+         \email{John RS Smith - john.RS.Smith@cambridge.co.uk}%
+      }
+      
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors' addresses here        %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\address{%
+    \iid(1)Life Sciences Department, Kings College London, Cornwall House,%
+        Waterloo Road, London, UK\\
+    \iid(2)Department of Zoology, Cambridge, Waterloo Road, London, UK\\
+    \iid(3)Marine Ecology Department, Institute of Marine Sciences Kiel, %
+        D\"{u}sternbrooker Weg 20, 24105 Kiel, Germany
+}%
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Abstract begins here                 %%
+%%                                          %%
+%% The Section headings here are those for  %%
+%% a Research article submitted to a        %%
+%% BMC-Series journal.                      %%  
+%%                                          %%
+%% If your article is not of this type,     %%
+%% then refer to the Instructions for       %%
+%% authors on http://www.biomedcentral.com  %%
+%% and change the section headings          %%
+%% accordingly.                             %%   
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The abstract of the manuscript should not exceed 350 words and must
+%% be structured into separate sections: Background, the context and
+%% purpose of the study; Methods, how the study was performed and
+%% statistical tests used; Results, the main findings; Conclusions,
+%% brief summary and potential implications. Please minimize the use
+%% of abbreviations and do not cite references in the abstract; Trial
+%% registration, if your research article reports the results of a
+%% controlled health care intervention, please list your trial
+%% registry, along with the unique identifying number, e.g. Trial
+%% registration: Current Controlled Trials ISRCTN73824458. Please note
+%% that there should be no space between the letters and numbers of
+%% your trial registration number.
+
+\begin{abstract}
+        % Do not use inserted blank lines (ie \\) until main body of text.
+        \paragraph*{Background:} Text for this section of the abstract. 
+      
+        \paragraph*{Methods:} Text for this section of the abstract \ldots
+
+        \paragraph*{Results:} Text for this section of the abstract \ldots
+
+        \paragraph*{Conclusions:} Text for this section of the abstract \ldots
+\end{abstract}
+
+
+
+\ifthenelse{\boolean{publ}}{\begin{multicols}{2}}{}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Main Body begins here                %%
+%%                                          %%
+%% The Section headings here are those for  %%
+%% a Research article submitted to a        %%
+%% BMC-Series journal.                      %%  
+%%                                          %%
+%% If your article is not of this type,     %%
+%% then refer to the instructions for       %%
+%% authors on:                              %%
+%% http://www.biomedcentral.com/info/authors%%
+%% and change the section headings          %%
+%% accordingly.                             %% 
+%%                                          %%
+%% See the Results and Discussion section   %%
+%% for details on how to create sub-sections%%
+%%                                          %%
+%% use \cite{...} to cite references        %%
+%%  \cite{koon} and                         %%
+%%  \cite{oreg,khar,zvai,xjon,schn,pond}    %%
+%%  \nocite{smith,marg,hunn,advi,koha,mouse}%%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%
+%% Background %%
+%%
+%% The background section should be written from the standpoint of
+%% researchers without specialist knowledge in that area and must
+%% clearly state - and, if helpful, illustrate - the background to the
+%% research and its aims. Reports of clinical research should, where
+%% appropriate, include a summary of a search of the literature to
+%% indicate why this study was necessary and what it aimed to
+%% contribute to the field. The section should end with a very brief
+%% statement of what is being reported in the article.
+
+\section*{Background}
+ Text for this section.\cite{koon,oreg,khar,zvai,xjon,schn,pond,smith,marg,hunn,advi,koha,mouse}
+
+
+%%%%%%%%%%%%%%%%%%
+%% Methods
+%%
+%% This should include the design of the study, the setting, the type
+%% of participants or materials involved, a clear description of all
+%% interventions and comparisons, and the type of analysis used,
+%% including a power calculation if appropriate.
+
+\section*{Methods}
+  \subsection*{Methods sub-heading for this section}
+    Text for this sub-section \ldots
+
+  \subsection*{Another methods sub-heading for this section}
+    Text for this sub-section \ldots
+
+  \subsection*{Yet another sub-heading for this section}
+    Text for this sub-section \ldots
+
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Results  %%
+%%
+%% The Results and Discussion may be combined into a single section or
+%% presented separately. Results of statistical analysis should
+%% include, where appropriate, relative and absolute risks or risk
+%% reductions, and confidence intervals. The results and discussion
+%% sections may also be broken into subsections with short,
+%% informative headings.
+
+\section*{Results}
+  \subsection*{Results sub-heading}
+    \subsubsection*{This is a sub-sub-heading}
+      Sub-sub-sub-headings are made with the \textsl{\\subsubsection} command. \pb
+      pb at end of lines ensures correct paragraph spacing.\pb
+	  Text for this sub-sub-section \ldots
+    \subsubsection*{Another sub-sub-sub-heading}
+      Text for this sub-sub-section \ldots
+
+  \subsection*{Another results sub-heading}
+    Text for this sub-section \ldots
+
+  \subsection*{Yet another results sub-heading}
+    Text for this sub-section.  More results \ldots
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Discussion
+%%
+%% The Results and Discussion may be combined into a single section or
+%% presented separately. Results of statistical analysis should
+%% include, where appropriate, relative and absolute risks or risk
+%% reductions, and confidence intervals. The results and discussion
+%% sections may also be broken into subsections with short,
+%% informative headings.
+
+\section*{Discussion}
+  \subsection*{Discussion sub-heading}
+    \subsubsection*{This is a sub-sub-heading}
+      Sub-sub-sub-headings are made with the \textsl{\\subsubsection} command. \pb
+      pb at end of lines ensures correct paragraph spacing.\pb
+	  Text for this sub-sub-section \ldots
+    \subsubsection*{Another sub-sub-sub-heading}
+      Text for this sub-sub-section \ldots
+
+  \subsection*{Another discussion sub-heading}
+    Text for this sub-section \ldots
+
+  \subsection*{Yet another discussion sub-heading}
+    Text for this sub-section.  More results \ldots
+
+
+    
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% This should state clearly the main conclusions of the research and
+%% give a clear explanation of their importance and relevance. Summary
+%% illustrations may be included.
+
+\section*{Conclusions}
+  Text for this section \ldots
+
+
+  
+%%%%%%%%%%%%%%%%%%%%%%
+%% If abbreviations are used in the text, either they should be
+%% defined in the text where first used, or a list of abbreviations
+%% can be provided, which should precede the competing interests and
+%% authors' contributions.
+
+\section*{List of abbreviations used}
+  Text for this section \ldots
+
+
+  
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% A competing interest exists when your interpretation of data or
+%% presentation of information may be influenced by your personal or
+%% financial relationship with other people or organizations. Authors
+%% should disclose any financial competing interests but also any
+%% non-financial competing interests that may cause them embarrassment
+%% were they to become public after the publication of the manuscript.
+%%
+%% Authors are required to complete a declaration of competing
+%% interests. All competing interests that are declared will be listed
+%% at the end of published articles. Where an author gives no
+%% competing interests, the listing will read 'The author(s) declare
+%% that they have no competing interests'.
+%%
+%% When completing your declaration, please consider the following
+%% questions:
+%%
+%% Financial competing interests
+%%
+%% * In the past five years have you received reimbursements, fees,
+%%   funding, or salary from an organization that may in any way gain or
+%%   lose financially from the publication of this manuscript, either
+%%   now or in the future? Is such an organization financing this
+%%   manuscript (including the article-processing charge)? If so, please
+%%   specify.
+%% * Do you hold any stocks or shares in an organization that may in
+%%   any way gain or lose financially from the publication of this
+%%   manuscript, either now or in the future? If so, please specify.
+%% * Do you hold or are you currently applying for any patents
+%%   relating to the content of the manuscript? Have you received
+%%   reimbursements, fees, funding, or salary from an organization
+%%   that holds or has applied for patents relating to the content of
+%%   the manuscript? If so, please specify.
+%% * Do you have any other financial competing interests? If so,
+%%   please specify.
+%%
+%% Non-financial competing interests
+%%
+%% * Are there any non-financial competing interests (political,
+%%   personal, religious, ideological, academic, intellectual,
+%%   commercial or any other) to declare in relation to this
+%%   manuscript? If so, please specify.
+%%
+%% If you are unsure as to whether you or one of your co-authors has a
+%% competing interest, please discuss it with the editorial office.
+
+\section*{Competing interests }
+    Text for this section \ldots
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%% In order to give appropriate credit to each author of a paper, the
+%% individual contributions of authors to the manuscript should be
+%% specified in this section.
+
+%% An ``author'' is generally considered to be someone who has made
+%% substantive intellectual contributions to a published study. To
+%% qualify as an author one should 1) have made substantial
+%% contributions to conception and design, or acquisition of data, or
+%% analysis and interpretation of data; 2) have been involved in
+%% drafting the manuscript or revising it critically for important
+%% intellectual content; and 3) have given final approval of the
+%% version to be published. Each author should have participated
+%% sufficiently in the work to take public responsibility for
+%% appropriate portions of the content. Acquisition of funding,
+%% collection of data, or general supervision of the research group,
+%% alone, does not justify authorship.
+
+%% We suggest the following kind of format (please use initials to
+%% refer to each author's contribution): AB carried out the molecular
+%% genetic studies, participated in the sequence alignment and drafted
+%% the manuscript. JY carried out the immunoassays. MT participated in
+%% the sequence alignment. ES participated in the design of the study
+%% and performed the statistical analysis. FG conceived of the study,
+%% and participated in its design and coordination and helped to draft
+%% the manuscript. All authors read and approved the final manuscript.
+
+%% All contributors who do not meet the criteria for authorship should
+%% be listed in an acknowledgements section. Examples of those who
+%% might be acknowledged include a person who provided purely
+%% technical help, writing assistance, or a department chair who
+%% provided only general support.
+
+\section*{Authors contributions}
+    Text for this section \ldots
+
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% You may choose to use this section to include any relevant
+%% information about the author(s) that may aid the reader’s
+%% interpretation of the article, and understand the standpoint of the
+%% author(s). This may include details about the authors'
+%% qualifications, current positions they hold at institutions or
+%% societies, or any other relevant background information. Please
+%% refer to authors using their initials. Note this section should not
+%% be used to describe any competing interests.
+
+\section*{Authors information}
+    Text for this section \ldots
+
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please acknowledge anyone who contributed towards the study by
+%% making substantial contributions to conception, design, acquisition
+%% of data, or analysis and interpretation of data, or who was
+%% involved in drafting the manuscript or revising it critically for
+%% important intellectual content, but who does not meet the criteria
+%% for authorship. Please also include their source(s) of
+%% funding. Please also acknowledge anyone who contributed materials
+%% essential for the study.
+
+%% The role of a medical writer must be included in the
+%% acknowledgements section, including their source(s) of funding.
+
+%% Authors should obtain permission to acknowledge from all those
+%% mentioned in the Acknowledgements.
+
+%% Please list the source(s) of funding for the study, for each
+%% author, and for the manuscript preparation in the acknowledgements
+%% section. Authors must describe the role of the funding body, if
+%% any, in study design; in the collection, analysis, and
+%% interpretation of data; in the writing of the manuscript; and in
+%% the decision to submit the manuscript for publication.
+
+\section*{Acknowledgements and Funding}
+  \ifthenelse{\boolean{publ}}{\small}{}
+  Text for this section \ldots
+
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%              
+%%  Bmc_article.bst  will be used to                       %%
+%%  create a .BBL file for submission, which includes      %%
+%%  XML structured for BMC.                                %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %% 
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %% 
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+{\ifthenelse{\boolean{publ}}{\footnotesize}{\small}
+ \bibliographystyle{bmc_article}  % Style BST file
+  \bibliography{bibliography} }     % Bibliography file (usually '*.bib' ) 
+
+%%%%%%%%%%%
+
+\ifthenelse{\boolean{publ}}{\end{multicols}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Figures                       %%
+%%                               %%
+%% NB: this is for captions and  %%
+%% Titles. All graphics must be  %%
+%% submitted separately and NOT  %%
+%% included in the Tex document  %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% Do not use \listoffigures as most will included as separate files
+
+\section*{Figures}
+  \subsection*{Figure 1 - Sample figure title}
+      A short description of the figure content
+      should go here.
+
+  \subsection*{Figure 2 - Sample figure title}
+      Figure legend text.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Tables                        %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use of \listoftables is discouraged.
+%%
+\section*{Tables}
+  \subsection*{Table 1 - Sample table title}
+    Here is an example of a \emph{small} table in \LaTeX\ using  
+    \verb|\tabular{...}|. This is where the description of the table 
+    should go. \par \mbox{}
+    \par
+    \mbox{
+      \begin{tabular}{|c|c|c|}
+        \hline \multicolumn{3}{|c|}{My Table}\\ \hline
+        A1 & B2  & C3 \\ \hline
+        A2 & ... & .. \\ \hline
+        A3 & ..  & .  \\ \hline
+      \end{tabular}
+      }
+  \subsection*{Table 2 - Sample table title}
+    Large tables are attached as separate files but should
+    still be described here.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Additional Files              %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Additional Files}
+  \subsection*{Additional file 1 --- Sample additional file title}
+    Additional file descriptions text (including details of how to
+    view the file, if it is in a non-standard format or the file extension).  This might
+    refer to a multi-page table or a figure.
+
+  \subsection*{Additional file 2 --- Sample additional file title}
+    Additional file descriptions text.
+
+
+\end{bmcformat}
+\end{document}
+
+
+
+
+
+
+
