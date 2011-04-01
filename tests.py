@@ -4,6 +4,7 @@
 import matplotlib
 matplotlib.use("AGG") 
 
+import data
 import models
 import graphics
 
@@ -18,3 +19,6 @@ class TestClass:
 
     def test_graphics(self):
         graphics.plot_nub([0,0], [1,0])
+
+        G = data.my_grid_graph([3, 3])
+        graphics.plot_puzzle_graph(G, G.pos)

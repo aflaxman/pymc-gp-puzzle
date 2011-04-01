@@ -1,5 +1,6 @@
 import networkx as nx
 import pylab as pl
+import random
 
 import models
 
@@ -22,4 +23,22 @@ def plot_nub(a, b):
     X = xy[:, 0]
     Y = xy[:, 1]
 
-    pl.plot(X, Y)
+    pl.plot(X, Y, color='black')
+
+def plot_line(a, b):
+    X = [a[0], b[0]]
+    Y = [a[1], b[1]]
+
+    pl.plot(X, Y, color='black')
+
+
+def plot_puzzle_graph(G, pos):
+    for u, v in G.edges_iter():
+        # if u and v are on the edge of graph, connect with a straight line
+        if len(G[u]) < 4 and len(G[v]) < 4:
+            plot_line(pos[u], pos[v])
+        else:
+            if random.random() > .5:
+                plot_nub(pos[u], pos[v])
+            else:
+                plot_nub(pos[v], pos[u])
