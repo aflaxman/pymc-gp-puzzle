@@ -5,10 +5,11 @@ import matplotlib
 matplotlib.use("AGG") 
 
 import models
+import graphics
 
 class TestClass:
-   def setUp(self):
-      pass
+    def setUp(self):
+        pass
 
-   def test_models(self):
-       assert False, 'Write test, fail, write code, pass'
+    def test_models(self):
+        X, Y = models.gp_puzzle_nub()
