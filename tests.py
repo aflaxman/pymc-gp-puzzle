@@ -24,3 +24,5 @@ class TestClass:
         graphics.plot_puzzle_graph(G, G.pos, diff_degree=1.5)
 
         graphics.plot_grid_puzzle([3,4], scale=2)
+
+        graphics.plot_grid_puzzle([4,4], amp=1)

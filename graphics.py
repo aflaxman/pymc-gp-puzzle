@@ -48,10 +48,12 @@ def plot_puzzle_graph(G, pos, diff_degree=2., amp=1., scale=1.5, **params):
     it and if the edge has an attrible for 'straight_line' set to
     True, don't make a nub
     """
-    # add matching on odd degree nodes
+    # add matching on odd degree nodes (with 'blank' as a hacky vtx in
+    # the middle to make sure the degree really increases
     odd_nodes = [v for v in G if len(G[v])%2 == 1]
     for u,v in zip(odd_nodes[::2], odd_nodes[1::2]):
-        G.add_edge(u, v, invisible_line=True)
+        G.add_edge(u, 'blank', invisible_line=True)
+        G.add_edge('blank', v, invisible_line=True)
 
     for u, v in nx.eulerian_circuit(G):
         if G[u][v].get('invisible_line'):
