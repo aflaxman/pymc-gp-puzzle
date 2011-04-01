@@ -8,15 +8,15 @@ from pymc import gp
 import data
 reload(data)
 
-def gp_puzzle_nub(steps=100):
+def gp_puzzle_nub(diff_degree=2., amp=1., scale=1.5, steps=100):
     """ Generate a puzzle nub connecting point a to point b"""
 
-    M, C = uninformative_prior_gp()
+    M, C = uninformative_prior_gp(0., diff_degree, amp, scale)
     gp.observe(M, C, data.puzzle_t, data.puzzle_x, data.puzzle_V)
     GPx = gp.GPSubmodel('GP', M, C, pl.arange(1))
     X = GPx.value.f(pl.arange(0., 1.0001, 1. / steps))
 
-    M, C = uninformative_prior_gp()
+    M, C = uninformative_prior_gp(0., diff_degree, amp, scale)
     gp.observe(M, C, data.puzzle_t, data.puzzle_y, data.puzzle_V)
     GPy = gp.GPSubmodel('GP', M, C, pl.arange(1))
     Y = GPy.value.f(pl.arange(0., 1.0001, 1. / steps))

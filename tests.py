@@ -21,6 +21,6 @@ class TestClass:
         graphics.plot_nub([0,0], [1,0])
 
         G = data.my_grid_graph([3, 3])
-        graphics.plot_puzzle_graph(G, G.pos)
+        graphics.plot_puzzle_graph(G, G.pos, diff_degree=1.5)
 
-        graphics.plot_grid_puzzle([3,4])
+        graphics.plot_grid_puzzle([3,4], scale=2)
