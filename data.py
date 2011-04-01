@@ -16,8 +16,8 @@ def my_grid_graph(shape):
     """ Create an nxn grid graph, with uniformly random edge weights,
     and a position dict G.pos
     """
-
     G = nx.grid_graph(list(shape))
+    G.shape = shape
     G.pos = {}
     for v in G:
         G.pos[v] = [v[0], v[1]]

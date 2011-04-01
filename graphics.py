@@ -3,6 +3,8 @@ import pylab as pl
 import random
 
 import models
+import data
+reload(data)
 
 # put messy matplotlib code here so I don't have to look at it if I
 # don't want to
@@ -42,3 +44,14 @@ def plot_puzzle_graph(G, pos):
                 plot_nub(pos[u], pos[v])
             else:
                 plot_nub(pos[v], pos[u])
+
+def plot_grid_puzzle(shape):
+    """ Generate a jigsaw puzzle on a square grid with dimensions
+    given by shape"""
+
+    G = data.my_grid_graph(shape)
+
+    pl.figure(figsize=shape)
+    pl.axes([0,0,1,1], frameon=True)
+    plot_puzzle_graph(G, G.pos)
+    pl.axis([-.1, shape[0]-.9, -.1, shape[1]-.9])

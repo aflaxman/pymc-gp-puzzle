@@ -22,3 +22,5 @@ class TestClass:
 
         G = data.my_grid_graph([3, 3])
         graphics.plot_puzzle_graph(G, G.pos)
+
+        graphics.plot_grid_puzzle([3,4])
