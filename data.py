@@ -18,6 +18,11 @@ def my_grid_graph(shape):
     """
     G = nx.grid_graph(list(shape))
     G.shape = shape
+    
+    for u, v in G.edges_iter():
+        if len(G[u]) < 4 and len(G[v]) < 4:
+            G[u][v]['straight_line'] = True
+
     G.pos = {}
     for v in G:
         G.pos[v] = [v[0], v[1]]

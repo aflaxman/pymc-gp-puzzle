@@ -10,6 +10,7 @@ reload(data)
 # don't want to
 
 def plot_nub(a, b):
+    """ Plot a puzzle nub from a to b"""
     X, Y = models.gp_puzzle_nub()
     xy = pl.array([X, Y])
 
@@ -28,6 +29,7 @@ def plot_nub(a, b):
     pl.plot(X, Y, color='black')
 
 def plot_line(a, b):
+    """ Plot a straight line from a to b"""
     X = [a[0], b[0]]
     Y = [a[1], b[1]]
 
@@ -35,9 +37,17 @@ def plot_line(a, b):
 
 
 def plot_puzzle_graph(G, pos):
-    for u, v in G.edges_iter():
-        # if u and v are on the edge of graph, connect with a straight line
-        if len(G[u]) < 4 and len(G[v]) < 4:
+    """ Turn graph into puzzle, by making a line for each edge
+    
+    if the edge has an attribute for 'invisible_line' set to True skip
+    it and if the edge has an attrible for 'straight_line' set to
+    True, don't make a nub
+    """
+    for u,v in G.edges_iter():
+        if G[u][v].get('invisible_line'):
+            continue
+
+        if G[u][v].get('straight_line'):
             plot_line(pos[u], pos[v])
         else:
             if random.random() > .5:
