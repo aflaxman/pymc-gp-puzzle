@@ -43,7 +43,12 @@ def plot_puzzle_graph(G, pos):
     it and if the edge has an attrible for 'straight_line' set to
     True, don't make a nub
     """
-    for u,v in G.edges_iter():
+    # add matching on odd degree nodes
+    odd_nodes = [v for v in G if len(G[v])%2 == 1]
+    for u,v in zip(odd_nodes[::2], odd_nodes[1::2]):
+        G.add_edge(u, v, invisible_line=True)
+
+    for u, v in nx.eulerian_circuit(G):
         if G[u][v].get('invisible_line'):
             continue
 
