@@ -14,8 +14,8 @@
 %%                                     %%
 %% Uses:                               %%
 %% cite.sty, url.sty, bmc_article.cls  %%
-%% ifthen.sty. multicol.sty		       %%
-%%									   %%
+%% ifthen.sty. multicol.sty            %%
+%%                                     %%
 %%                                     %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -74,7 +74,7 @@
 
 %\def\includegraphic{}
 %\def\includegraphics{}
-
+\def\Matern{Mat\`{e}rn}
 
 
 \setlength{\topmargin}{0.0cm}
@@ -129,7 +129,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{A sample article title}
+\title{Gaussian Processes for Jigsaw Puzzles}
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -145,14 +145,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\author{Charles A Darwin\correspondingauthor$^{1,2}$%
-       \email{Charles A Darwin\correspondingauthor - charles@londonzoo.co.uk}%
-      \and
-         Jane E Doe\correspondingauthor$^2$%
-         \email{Jane E Doe\correspondingauthor - jane.e.doe@cambridge.co.uk}
-       and 
-         John RS Smith$^3$%
-         \email{John RS Smith - john.RS.Smith@cambridge.co.uk}%
+\author{Abraham D Flaxman\correspondingauthor$^{1}$%
+       \email{Abraham D Flaxman\correspondingauthor - abie@uw.edu}%
       }
       
 
@@ -163,11 +157,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \address{%
-    \iid(1)Life Sciences Department, Kings College London, Cornwall House,%
-        Waterloo Road, London, UK\\
-    \iid(2)Department of Zoology, Cambridge, Waterloo Road, London, UK\\
-    \iid(3)Marine Ecology Department, Institute of Marine Sciences Kiel, %
-        D\"{u}sternbrooker Weg 20, 24105 Kiel, Germany
+    \iid(1)Institute for Health Metrics and Evaluations, Dept. of Global Health, University of Washington, USA
 }%
 
 \maketitle
@@ -202,13 +192,13 @@
 
 \begin{abstract}
         % Do not use inserted blank lines (ie \\) until main body of text.
-        \paragraph*{Background:} Text for this section of the abstract. 
+        \paragraph*{Background:} Gaussian Processes (GP) are an important tool in non-parametric statistics.  They can also be aesthetically pleasing .
       
-        \paragraph*{Methods:} Text for this section of the abstract \ldots
+        \paragraph*{Methods:} I used the Free/Libre Open Source Software (FLOSS) Python PyMC GP package to generate cute, random puzzle nubs for making jigsaw puzzles.  This also serves as demonstration and exploration of the 3 parameters of the \Matern covariance function, which is an important, and sometimes confusing mathematical object popular in GP modeling.
 
-        \paragraph*{Results:} Text for this section of the abstract \ldots
+        \paragraph*{Results:} The \Matern parameters have a complex interdependence, and setting any one incorrectly can lead to non-nubby puzzle pieces. Furthermore, the non-nubbyness can be similarly accomplished by setting any one of the three parameters incorrectly.
 
-        \paragraph*{Conclusions:} Text for this section of the abstract \ldots
+        \paragraph*{Conclusions:} FLOSS math and stats tools are good for recreational math projects, which can also serve as educational tools.  The \Matern covariance function is very expressive, but its parameters are highly interdependent in a way that can be surprising.
 \end{abstract}
 
 
