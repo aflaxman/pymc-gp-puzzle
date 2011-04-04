@@ -71,10 +71,10 @@
 %%                                             %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                     
 
-
+\usepackage{pgf}
 %\def\includegraphic{}
 %\def\includegraphics{}
-\usepackage{xspace}
+\usepackage{xspace, amsmath}
 \def\Matern{Mat\'{e}rn\xspace}
 
 
@@ -248,9 +248,94 @@
 %% indicate why this study was necessary and what it aimed to
 %% contribute to the field. The section should end with a very brief
 %% statement of what is being reported in the article.
+\newpage
 
 \section*{Background}
- Text for this section.\cite{koon,oreg,khar,zvai,xjon,schn,pond,smith,marg,hunn,advi,koha,mouse}
+Wikipedia provides a fine background:
+\begin{quote}
+In probability theory and statistics] a \emph{Gaussian process} is a
+  stochastic process whose realizations consist of random variable
+  associated with every point in a range of times (or of space) such
+  that each such random variable has a normal distribution. Moreover,
+  every finite collection of those random variables has a multivariate
+  normal distribution.
+
+Gaussian processes are important in statistical modeling because
+of properties inherited from the normal distribution. For example, if
+a random process is modeled as a Gaussian process, the distributions
+of various derived quantities can be obtained explicitly. Such
+quantities include: the average value of the process over a range of
+times; the error in estimating the average using sample values at a
+small set of times.
+
+A Gaussian process is a stochastic process $\{X_t : t \in T\}$ for
+which any finite linear combination of samples will be normally
+distributed (or, more generally, any linear functional applied to the
+sample function $X_t$ will give a normally distributed result).
+
+Alternatively, a process is Gaussian if and only if for every finite
+set of indices $t_{1,\ldots,k}$ in the index set $T$,
+\[
+ \vec{\mathbf{X}}_{t_1, \ldots, t_k} = (\mathbf{X}_{t_1}, \ldots, \mathbf{X}_{t_k})
+\]
+
+is a vector-valued Gaussian
+random variable. Using characteristic functions of random variables, the
+Gaussian property can be formulated as
+follows: $\{X_t : t \in T\}$
+is Gaussian if and only if, for every finite set of indices
+$t_1, \ldots, t_k$, there are reals
+$\sigma_{l j}$ with $\sigma_{ii} > 0$ and reals
+$\mu_j$ such that
+
+\[
+\operatorname{E}\left(\exp\left(i \ \sum_{\ell=1}^k t_\ell
+\ \mathbf{X}_{t_\ell}\right)\right) = \exp \left(-\frac{1}{2} \,
+\sum_{\ell, j} \sigma_{\ell j} t_\ell t_j + i \sum_\ell \mu_\ell
+t_\ell\right).
+\]
+
+The numbers $\sigma_{lj}$ and $\mu_j$ can be shown to be the
+covariances and means of the variables in
+the process \cite{WP:GP}.
+
+The ``\Matern covariance'' (named after the Swedish forestry
+statistician Bertil Mat\'{e}rn) is a covariance function used in
+spatial statistics, geostatistics, machine learning, image analysis,
+and other applications of multivariate statistical analysis on metric
+spaces. It is commonly used to define the statistical covariance
+between measurements made at two points that are $d$ units distant
+from each other. Since the covariance only depends on distances
+between points, it is stationary process. If the distance is Euclidean
+distance, the Matérn covariance is also isotropic.
+
+The \Matern covariance between two points separated by $d$ distance
+units is given by
+\[
+C(d) =
+\sigma^2\frac{1}{\Gamma(\nu)2^{\nu-1}}\Bigg(2\sqrt{\nu}\frac{d}{\rho}\Bigg)^\nu
+K_\nu\Bigg(2\sqrt{\nu}\frac{d}{\rho}\Bigg),
+\]
+
+where $\Gamma$ is the gamma function, $K_\nu$ is the modified Bessel
+function of the second kind, and $\rho$ and $\nu$ are non-negative
+parameters of the covariance.
+
+A Gaussian process with \Matern covariance has sample paths that are
+$\lceil \nu-1 \rceil$ times differentiable. As $\nu\rightarrow\infty$,
+the \Matern covariance converges to the squared exponential covariance
+function
+\[
+C(d) = \sigma^2\exp(-d^2/\rho^2). \,
+\]
+When $\nu = 0.5$, the \Matern covariance is identical to the
+exponential covariance function \cite{WP:Matern}.
+\end{quote}
+
+Following the conventions of the \Matern implementation in the PyMC GP
+Package, I call $\sigma$ the amplitude, $\rho$ the scale, and $\nu$
+the degree of differentiability.
+
 
 
 %%%%%%%%%%%%%%%%%%
@@ -262,16 +347,49 @@
 %% including a power calculation if appropriate.
 
 \section*{Methods}
-  \subsection*{Methods sub-heading for this section}
-    Text for this sub-section \ldots
+The Free/Libre Open Source Software (FLOSS) package PyMC has an
+efficient set of Gaussian Process routines, including an
+implementation of the \Matern covariance function.  In order to use
+this to generate the nubs for jigsaw puzzles, I designed a set of
+``observations'' which lead a pair of GPs through the contortions expected of a jigsaw puzzle nub (Fig.~\ref{fig:controls}).
 
-  \subsection*{Another methods sub-heading for this section}
-    Text for this sub-section \ldots
+\begin{figure}
+\includegraphics{fig1.pdf}
+\caption{Two Gaussian Processes (panel a) for $x(t)$ and panel b) for
+  $y(t)$ with \Matern covariance functions and 7 ``observations'' that
+  look like a puzzle nub when plotted as a two dimensional function of
+  time (panel c).  The GP realizations (solid red lines) show the
+  results of choosing good nub-like parameters for the \Matern
+  covariance function of $\sigma = 1, \rho = 1.5, \nu = 2$.}
+\label{fig:controls}
+\end{figure}
 
-  \subsection*{Yet another sub-heading for this section}
-    Text for this sub-section \ldots
+Realizing this GP is straightforward with PyMC, requiring little more
+than the following code:
+\begin{verbatim}
+M, C = uninformative_prior_gp(0., diff_degree, amp, scale)
+gp.observe(M, C, data.puzzle_t, data.puzzle_x, data.puzzle_V)
+GPx = gp.GPSubmodel('GP', M, C, pl.arange(1))
+X = GPx.value.f(pl.arange(0., 1.0001, 1. / steps))
+\end{verbatim}
 
+By mapping the nubs from these pairs of GPs to the edges of graphs
+embedded in the plane, I automatically generated random puzzles (for
+example, Fig~\ref{fig:puzzle}).
 
+\begin{figure}
+\includegraphics[width=\textwidth]{fig2.pdf}
+\caption{A small, randomly generated puzzle, using pairs of Gaussian
+  Processes with \Matern covariance functions and 7 ``observations''
+  when good nub-like parameters for the \Matern covariance function
+  ($\sigma = 1, \rho = 1.5, \nu = 2$) are selected.}
+\label{fig:puzzle}
+\end{figure}
+
+To explore the effects of the amplitude, scale, and degree of
+differentiability parameters, I varied each parameter individually
+through a range of values, while holding the other two fixed at good
+parameters for puzzle nubs.
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Results  %%
@@ -283,46 +401,23 @@
 %% sections may also be broken into subsections with short,
 %% informative headings.
 
-\section*{Results}
-  \subsection*{Results sub-heading}
-    \subsubsection*{This is a sub-sub-heading}
-      Sub-sub-sub-headings are made with the \textsl{\\subsubsection} command. \pb
-      pb at end of lines ensures correct paragraph spacing.\pb
-	  Text for this sub-sub-section \ldots
-    \subsubsection*{Another sub-sub-sub-heading}
-      Text for this sub-sub-section \ldots
+\section*{Results and Discussion}
+The results are summarized by Fig~\ref{fig:vary}.
+\begin{figure}
+\includegraphics[width=\textwidth]{fig3.pdf}
+\caption{Realizations of GP puzzle pieces with varying \Matern
+  parameters, using pairs of Gaussian Processes with \Matern
+  covariance functions and 7 ``observations''.  The parameters not
+  listed in each row are the nub-like parameters $\sigma = 1, \rho =
+  1.5,$ and/or $\nu = 2$.}
+\label{fig:vary}
+\end{figure}
 
-  \subsection*{Another results sub-heading}
-    Text for this sub-section \ldots
-
-  \subsection*{Yet another results sub-heading}
-    Text for this sub-section.  More results \ldots
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Discussion
-%%
-%% The Results and Discussion may be combined into a single section or
-%% presented separately. Results of statistical analysis should
-%% include, where appropriate, relative and absolute risks or risk
-%% reductions, and confidence intervals. The results and discussion
-%% sections may also be broken into subsections with short,
-%% informative headings.
-
-\section*{Discussion}
-  \subsection*{Discussion sub-heading}
-    \subsubsection*{This is a sub-sub-heading}
-      Sub-sub-sub-headings are made with the \textsl{\\subsubsection} command. \pb
-      pb at end of lines ensures correct paragraph spacing.\pb
-	  Text for this sub-sub-section \ldots
-    \subsubsection*{Another sub-sub-sub-heading}
-      Text for this sub-sub-section \ldots
-
-  \subsection*{Another discussion sub-heading}
-    Text for this sub-section \ldots
-
-  \subsection*{Yet another discussion sub-heading}
-    Text for this sub-section.  More results \ldots
-
+As shown in Fig~\ref{fig:vary}, the \Matern parameters have a complex
+interdependence structure, and setting any one incorrectly can lead to
+e non-nubby puzzle pieces.  The middle column of the figure shows the
+nubby settings, while the entry with $\sigma=.25$ looks qualitatively
+very similar to that with $\rho = 3.00$ and also $\nu = 4.00$.
 
     
 
@@ -332,22 +427,10 @@
 %% illustrations may be included.
 
 \section*{Conclusions}
-  Text for this section \ldots
+GPs are an important tool in non-parametric statistics, but be careful
+with the parameters, because they have complex interdependencies.
 
 
-  
-%%%%%%%%%%%%%%%%%%%%%%
-%% If abbreviations are used in the text, either they should be
-%% defined in the text where first used, or a list of abbreviations
-%% can be provided, which should precede the competing interests and
-%% authors' contributions.
-
-\section*{List of abbreviations used}
-  Text for this section \ldots
-
-
-  
-    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% A competing interest exists when your interpretation of data or
 %% presentation of information may be influenced by your personal or
@@ -395,7 +478,7 @@
 %% competing interest, please discuss it with the editorial office.
 
 \section*{Competing interests }
-    Text for this section \ldots
+The author declares that he has no competing interests.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 
@@ -432,50 +515,10 @@
 %% provided only general support.
 
 \section*{Authors contributions}
-    Text for this section \ldots
+AF designed the study, performed the analysis, and wrote the paper.
+
 
     
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% You may choose to use this section to include any relevant
-%% information about the author(s) that may aid the reader’s
-%% interpretation of the article, and understand the standpoint of the
-%% author(s). This may include details about the authors'
-%% qualifications, current positions they hold at institutions or
-%% societies, or any other relevant background information. Please
-%% refer to authors using their initials. Note this section should not
-%% be used to describe any competing interests.
-
-\section*{Authors information}
-    Text for this section \ldots
-
-    
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Please acknowledge anyone who contributed towards the study by
-%% making substantial contributions to conception, design, acquisition
-%% of data, or analysis and interpretation of data, or who was
-%% involved in drafting the manuscript or revising it critically for
-%% important intellectual content, but who does not meet the criteria
-%% for authorship. Please also include their source(s) of
-%% funding. Please also acknowledge anyone who contributed materials
-%% essential for the study.
-
-%% The role of a medical writer must be included in the
-%% acknowledgements section, including their source(s) of funding.
-
-%% Authors should obtain permission to acknowledge from all those
-%% mentioned in the Acknowledgements.
-
-%% Please list the source(s) of funding for the study, for each
-%% author, and for the manuscript preparation in the acknowledgements
-%% section. Authors must describe the role of the funding body, if
-%% any, in study design; in the collection, analysis, and
-%% interpretation of data; in the writing of the manuscript; and in
-%% the decision to submit the manuscript for publication.
-
-\section*{Acknowledgements and Funding}
-  \ifthenelse{\boolean{publ}}{\small}{}
-  Text for this section \ldots
 
 
  
@@ -504,71 +547,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               %%
-%% Figures                       %%
-%%                               %%
-%% NB: this is for captions and  %%
-%% Titles. All graphics must be  %%
-%% submitted separately and NOT  %%
-%% included in the Tex document  %%
-%%                               %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%
-%% Do not use \listoffigures as most will included as separate files
-
-\section*{Figures}
-  \subsection*{Figure 1 - Sample figure title}
-      A short description of the figure content
-      should go here.
-
-  \subsection*{Figure 2 - Sample figure title}
-      Figure legend text.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                               %%
-%% Tables                        %%
-%%                               %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Use of \listoftables is discouraged.
-%%
-\section*{Tables}
-  \subsection*{Table 1 - Sample table title}
-    Here is an example of a \emph{small} table in \LaTeX\ using  
-    \verb|\tabular{...}|. This is where the description of the table 
-    should go. \par \mbox{}
-    \par
-    \mbox{
-      \begin{tabular}{|c|c|c|}
-        \hline \multicolumn{3}{|c|}{My Table}\\ \hline
-        A1 & B2  & C3 \\ \hline
-        A2 & ... & .. \\ \hline
-        A3 & ..  & .  \\ \hline
-      \end{tabular}
-      }
-  \subsection*{Table 2 - Sample table title}
-    Large tables are attached as separate files but should
-    still be described here.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                               %%
 %% Additional Files              %%
 %%                               %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Additional Files}
-  \subsection*{Additional file 1 --- Sample additional file title}
-    Additional file descriptions text (including details of how to
-    view the file, if it is in a non-standard format or the file extension).  This might
-    refer to a multi-page table or a figure.
-
-  \subsection*{Additional file 2 --- Sample additional file title}
-    Additional file descriptions text.
-
+  \subsection*{Additional file 1 --- Source Code}
+    The source code used to generate puzzles and all plots in this paper with the Python PyMC GP Package is available under FLOSS GPL 3.0 Licence from \url{http://github.com/aflaxman/pymc-gp-pzzle}.
 
 \end{bmcformat}
 \end{document}
