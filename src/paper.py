@@ -49,7 +49,7 @@ def figure1():
     pl.xlabel('$x(t)$')
     pl.ylabel('$y(t)$')
 
-    pl.savefig('fig1.pdf')
+    pl.savefig('../tex/fig1.pdf')
 
 
 def figure2():
@@ -59,7 +59,7 @@ def figure2():
     pl.axis('off')
     pl.xticks([])
     pl.yticks([])
-    pl.savefig('fig2.pdf')
+    pl.savefig('../tex/fig2.pdf')
 
 def figure3():
     pl.figure(3, figsize=(10,6))
@@ -86,7 +86,7 @@ def figure3():
             pl.axis('off')
             pl.text(-.5, 1.5, '$%s = %.2f$' % (param[i], val[i][j]))
 
-    pl.savefig('fig3.pdf')
+    pl.savefig('../tex/fig3.pdf')
 
 
 if __name__ == '__main__':
