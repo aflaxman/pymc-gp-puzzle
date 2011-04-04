@@ -73,7 +73,6 @@ def plot_grid_puzzle(shape, **params):
 
     G = data.my_grid_graph(shape)
 
-    pl.figure(num=1, figsize=shape)
     pl.axes([0,0,1,1], frameon=True)
     plot_puzzle_graph(G, G.pos, **params)
     pl.axis([-.1, shape[0]-.9, -.1, shape[1]-.9])
