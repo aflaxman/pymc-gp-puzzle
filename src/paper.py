@@ -50,6 +50,7 @@ def figure1():
     pl.ylabel('$y(t)$')
 
     pl.savefig('../tex/fig1.pdf')
+    pl.savefig('../fig1.png')
 
 
 def figure2():
@@ -60,6 +61,7 @@ def figure2():
     pl.xticks([])
     pl.yticks([])
     pl.savefig('../tex/fig2.pdf')
+    pl.savefig('../fig2.png')
 
 def figure3():
     pl.figure(3, figsize=(10,6))
@@ -69,16 +71,18 @@ def figure3():
         G[u][v]['straight_line'] = False
 
     param = ['\sigma', '\\rho', '\\nu']
-    val = [[.25, .5, 1., 2., 4.],
-           [.25, .75, 1.5, 3., 6.],
-           [.5, 1., 2., 4., 8.]]
+    val = [[.25, 1., 2., 4., 8.],
+           [3., 1.5, 1., .75, .5],
+           [4., 2., 1.5, 1., .75]]
 
     for i in range(3):
         for j in range(5):
-            params = dict(diff_degree=2., amp=1., scale=1.5)
+            params = {}
             if i == 0: params['amp'] = val[i][j]
             if i == 1: params['scale'] = val[i][j]
             if i == 2: params['diff_degree'] = val[i][j]
+
+            if j >= 3: params['steps'] = 350  # more detail for the really weird ones
 
             pl.subplot(3, 5, i*5 + j + 1)
             graphics.plot_puzzle_graph(G, G.pos, **params)
@@ -87,6 +91,7 @@ def figure3():
             pl.text(-.5, 1.5, '$%s = %.2f$' % (param[i], val[i][j]))
 
     pl.savefig('../tex/fig3.pdf')
+    pl.savefig('../fig3.png')
 
 
 if __name__ == '__main__':

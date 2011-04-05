@@ -10,9 +10,9 @@ reload(data)
 # put messy matplotlib code here so I don't have to look at it if I
 # don't want to
 
-def plot_nub(a, b, diff_degree=2., amp=1., scale=1.5, **addl_plot_params):
+def plot_nub(a, b, diff_degree=2., amp=1., scale=1.5, steps=100, **addl_plot_params):
     """ Plot a puzzle nub from a to b"""
-    X, Y = models.gp_puzzle_nub(diff_degree, amp, scale)
+    X, Y = models.gp_puzzle_nub(diff_degree, amp, scale, steps)
     xy = pl.array([X, Y])
 
     a = pl.array(a)
@@ -41,7 +41,7 @@ def plot_line(a, b, **addl_plot_params):
     my_plot(X, Y, **addl_plot_params)
 
 
-def plot_puzzle_graph(G, pos, diff_degree=2., amp=1., scale=1.5, **params):
+def plot_puzzle_graph(G, pos, diff_degree=2., amp=1., scale=1.5, steps=100, **params):
     """ Turn graph into puzzle, by making a line for each edge
     
     if the edge has an attribute for 'invisible_line' set to True skip
@@ -63,9 +63,9 @@ def plot_puzzle_graph(G, pos, diff_degree=2., amp=1., scale=1.5, **params):
             plot_line(pos[u], pos[v], **params)
         else:
             if random.random() > .5:
-                plot_nub(pos[u], pos[v], diff_degree, amp, scale, **params)
+                plot_nub(pos[u], pos[v], diff_degree, amp, scale, steps, **params)
             else:
-                plot_nub(pos[v], pos[u], diff_degree, amp, scale, **params)
+                plot_nub(pos[v], pos[u], diff_degree, amp, scale, steps, **params)
 
 def plot_grid_puzzle(shape, **params):
     """ Generate a jigsaw puzzle on a square grid with dimensions
