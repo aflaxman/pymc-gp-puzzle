@@ -28,3 +28,10 @@ def my_grid_graph(shape):
         G.pos[v] = [v[0], v[1]]
 
     return G
+
+def load_svg(fname):
+    from xml.dom import minidom
+    dom = minidom.parse(fname)
+
+    for path in dom.getElementsByTagName('path'):
+        assert 0, 'TODO: parse svg info well enough to form a graph (seems more complicated than I expected)'
