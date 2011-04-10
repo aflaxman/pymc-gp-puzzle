@@ -52,8 +52,9 @@ def plot_puzzle_graph(G, pos, diff_degree=2., amp=1., scale=1.5, steps=100, **pa
     # the middle to make sure the degree really increases
     odd_nodes = [v for v in G if len(G[v])%2 == 1]
     for u,v in zip(odd_nodes[::2], odd_nodes[1::2]):
-        G.add_edge(u, 'blank', invisible_line=True)
-        G.add_edge('blank', v, invisible_line=True)
+        midpt = 'mid_%s_%s' % (u,v)
+        G.add_edge(u, midpt, invisible_line=True)
+        G.add_edge(midpt, v, invisible_line=True)
 
     for u, v in nx.eulerian_circuit(G):
         if G[u][v].get('invisible_line'):
